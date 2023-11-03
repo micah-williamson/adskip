@@ -1,8 +1,8 @@
-console.log('Init');
+console.debug('AdSkip Init');
 startAdWatch();
 
 function startAdWatch() {
-    console.log('Starting ad watch');
+    console.debug('Starting ad watch');
     const adWatchInterval = setInterval(() => {
         const adPlayerOverlay = getAdPlayerOverlay();
         if (adPlayerOverlay) {
@@ -13,16 +13,16 @@ function startAdWatch() {
 }
 
 function startAdSkip(adPlayerOverlay) {
-    console.log('Starting ad skip');
+    console.debug('Starting ad skip');
     const adSkipTarget = getSkipAdTarget();
     const muteTarget = getMuteTarget();
     if (!isMuted(muteTarget)) {
-        console.log('Muting video');
+        console.debug('Muting video');
         muteTarget.click();
     }
 
     if (adSkipTarget) {
-        console.log('Found ad skip button');
+        console.debug('Found ad skip button');
     }
 
     const skipInterval = setInterval(() => {
@@ -32,17 +32,17 @@ function startAdSkip(adPlayerOverlay) {
         }
 
         if (!adPlayerOverlay.parentNode) {
-            console.log('Ad is gone');
+            console.debug('Ad is gone');
             // Skip target went away somehow. Resume
             resume();
         }
     }, 10);
 
     function resume() {
-        console.log('Resuming');
+        console.debug('Resuming');
         clearInterval(skipInterval);
         if (isMuted(muteTarget)) {
-            console.log('Unmuting video');
+            console.debug('Unmuting video');
             muteTarget.click();
         }
 
