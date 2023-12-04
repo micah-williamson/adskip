@@ -14,21 +14,33 @@ function startAdWatch() {
 
 function startAdSkip(adPlayerOverlay) {
     console.debug('Starting ad skip');
-    const adSkipTarget = getSkipAdTarget();
+
+    let adSkipTarget;
+    let adVideo;
+
     const muteTarget = getMuteTarget();
     if (!isMuted(muteTarget)) {
         console.debug('Muting video');
         muteTarget.click();
     }
 
-    if (adSkipTarget) {
-        console.debug('Found ad skip button');
-    }
-
     const skipInterval = setInterval(() => {
-        if (adSkipTarget) {
-            // This only exists of the ad is skippable
-            adSkipTarget.click();
+        // Attempt to seek the video to the end
+        if (!adVideo) {
+            adVideo = getAdVideo();
+            if (adVideo) {
+                console.debug('Found ad video. Seeking to end');
+                adVideo.currentTime = 1e5;
+            }
+        }
+
+        // Attempt to click the ad skip button
+        if (!adSkipTarget) {
+            adSkipTarget = getSkipAdTarget();
+            if (adSkipTarget) {
+                console.debug('Found ad skip button. Clicking');
+                adSkipTarget.click();
+            }
         }
 
         if (!adPlayerOverlay.parentNode) {
@@ -63,6 +75,10 @@ function getSkipAdTarget() {
 
 function getMuteTarget() {
     return document.getElementsByClassName('ytp-mute-button')[0];
+}
+
+function getAdVideo() {
+    return document.querySelector('#container video');
 }
 
 function isMuted(muteTarget) {
