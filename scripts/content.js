@@ -4,7 +4,7 @@ startAdWatch();
 function startAdWatch() {
     console.debug('Starting ad watch');
     const adWatchInterval = setInterval(() => {
-        const adPlayerOverlay = getAdPlayerOverlay();
+        const adPlayerOverlay = document.querySelector('.ytp-ad-player-overlay');
         if (adPlayerOverlay) {
             clearInterval(adWatchInterval);
             startAdSkip(adPlayerOverlay);
@@ -18,25 +18,20 @@ function startAdSkip(adPlayerOverlay) {
     let adSkipTarget;
     let adVideo;
 
-    const muteTarget = getMuteTarget();
-    if (!isMuted(muteTarget)) {
-        console.debug('Muting video');
-        muteTarget.click();
-    }
-
     const skipInterval = setInterval(() => {
         // Attempt to seek the video to the end
         if (!adVideo) {
-            adVideo = getAdVideo();
+            adVideo = document.querySelector('video');
             if (adVideo) {
                 console.debug('Found ad video. Seeking to end');
+                adVideo.muted = true;
                 adVideo.currentTime = 1e5;
             }
         }
 
         // Attempt to click the ad skip button
         if (!adSkipTarget) {
-            adSkipTarget = getSkipAdTarget();
+            adSkipTarget = document.querySelector('.ytp-ad-skip-button-container');
             if (adSkipTarget) {
                 console.debug('Found ad skip button. Clicking');
                 adSkipTarget.click();
@@ -53,35 +48,12 @@ function startAdSkip(adPlayerOverlay) {
     function resume() {
         console.debug('Resuming');
         clearInterval(skipInterval);
-        if (isMuted(muteTarget)) {
-            console.debug('Unmuting video');
-            muteTarget.click();
-        }
+
+        console.debug('Unmuting video');
+        const video = document.querySelector('video');
+        video.muted = false;
 
         // Watch for mid-video ads
         startAdWatch();
     }
-}
-
-function getAdPlayerOverlay() {
-    const skipAdTargets = document.getElementsByClassName('ytp-ad-player-overlay');
-    return skipAdTargets.length > 0 ? skipAdTargets[0] : null;
-}
-
-function getSkipAdTarget() {
-    const skipAdTargets = document.getElementsByClassName('ytp-ad-skip-button-container');
-    return skipAdTargets.length > 0 ? skipAdTargets[0] : null;
-}
-
-function getMuteTarget() {
-    return document.getElementsByClassName('ytp-mute-button')[0];
-}
-
-function getAdVideo() {
-    return document.querySelector('#container video');
-}
-
-function isMuted(muteTarget) {
-    const dataTitle = muteTarget.getAttribute('data-title-no-tooltip');
-    return dataTitle.toLowerCase() !== 'mute';
 }
