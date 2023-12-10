@@ -1,9 +1,10 @@
 # YoutubeAdSkip 
 
-Automatically mutes youtube ads as soon as they appear.
-Skips ads within 1s of them appearing (regardless of countdown).
-Works on traditionally unskippable ads.
-Works on Firefox Mobile.
+Automatically mutes YouTube ads as soon as they appear. 
+Skips ads within 1s of them appearing. 
+Works on traditionally unskippable ads. 
+Works with YouTube Music. 
+Works on Firefox Android.
 
 If you are using **Firefox** you can install the addons from: https://addons.mozilla.org/en-US/firefox/addon/youtubeadskip/
 

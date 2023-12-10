@@ -4,7 +4,7 @@ startAdWatch();
 function startAdWatch() {
     console.debug('Starting ad watch');
     const adWatchInterval = setInterval(() => {
-        const adPlayerOverlay = document.querySelector('.ytp-ad-player-overlay');
+        const adPlayerOverlay = document.getElementById('movie_player').querySelector('.ytp-ad-player-overlay');
         if (adPlayerOverlay) {
             clearInterval(adWatchInterval);
             startAdSkip(adPlayerOverlay);
@@ -21,7 +21,7 @@ function startAdSkip(adPlayerOverlay) {
     const skipInterval = setInterval(() => {
         // Attempt to seek the video to the end
         if (!adVideo) {
-            adVideo = document.querySelector('video');
+            adVideo = document.getElementById('movie_player').querySelector('video');
             if (adVideo) {
                 console.debug('Found ad video. Seeking to end');
                 adVideo.muted = true;
@@ -31,7 +31,7 @@ function startAdSkip(adPlayerOverlay) {
 
         // Attempt to click the ad skip button
         if (!adSkipTarget) {
-            adSkipTarget = document.querySelector('.ytp-ad-skip-button-container');
+            adSkipTarget = document.getElementById('movie_player').querySelector('.ytp-ad-skip-button-container');
             if (adSkipTarget) {
                 console.debug('Found ad skip button. Clicking');
                 adSkipTarget.click();
