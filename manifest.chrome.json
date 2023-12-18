@@ -1,21 +1,11 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "YouTubeAdSkip",
     "version": "1.5",
     "description": "Automatically mutes YT videos when an ad starts playing. Then skips the ad as soon as possible.",
     "icons": {
       "48": "images/icon-48.png",
       "128": "images/icon-128.png"
-    },  
-    "browser_specific_settings": {
-        "gecko": {
-            "strict_min_version": "48.0",
-            "id": "{41d0609d-e956-42d2-91d0-2f85219b7cf8}"
-        },
-        "gecko_android": {
-          "id": "{41d0609d-e956-42d2-91d0-2f85219b7cf8}",
-          "strict_min_version": "113.0"
-        }
     },
     "content_scripts": [
       {

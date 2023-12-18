@@ -9,7 +9,7 @@ function startAdWatch() {
             clearInterval(adWatchInterval);
             startAdSkip(adPlayerOverlay);
         }
-    }, 100);
+    }, 30);
 }
 
 function startAdSkip(adPlayerOverlay) {
@@ -50,10 +50,31 @@ function startAdSkip(adPlayerOverlay) {
         clearInterval(skipInterval);
 
         console.debug('Unmuting video');
-        const video = document.querySelector('video');
+        const video = document.getElementById('movie_player').querySelector('video');
         video.muted = false;
+
+        // Sometimes the main video will be paused for some time after the ad is skipped. Even after
+        // pausing the video will somehow become paused again. So we will attempt to unpause the
+        // video for some time
+        unpauseTenaciously(video, 100);
 
         // Watch for mid-video ads
         startAdWatch();
+    }
+}
+
+function unpauseTenaciously(video, attempt) {
+    if (attempt <= 0) {
+        console.debug('Finished tenaciously unpausing');
+        return;
+    }
+
+    if (video.paused) {
+        console.debug('Video was paused. Playing');
+        video.play();
+        // Video may become paused again even after unpausing. Keep checking
+        setTimeout(unpauseTenaciously, 10, video, attempt-1);
+    } else {
+        setTimeout(unpauseTenaciously, 10, video, attempt-1);
     }
 }
