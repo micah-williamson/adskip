@@ -54,7 +54,7 @@ function startAdSkip(adPlayerOverlay) {
         video.muted = false;
 
         // Sometimes the main video will be paused for some time after the ad is skipped. Even after
-        // pausing the video will somehow become paused again. So we will attempt to unpause the
+        // unpausing, the video will somehow become paused again. So we will attempt to unpause the
         // video for some time
         unpauseTenaciously(video, 100);
 
