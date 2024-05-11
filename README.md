@@ -1,3 +1,10 @@
+# DISCLAIMER
+
+This extension no longer works after Youtube updated their site. 
+It could be fixed with a few changes, but all of the major adblock extensions are working again.
+They work by applying the same method as this extenion, and will receive regular timely updates.
+Just use [Adblock Plus](https://adblockplus.org/)
+
 # YoutubeAdSkip 
 
 Automatically mutes YouTube ads as soon as they appear. 
